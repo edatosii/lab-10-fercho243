@@ -41,9 +41,37 @@ public class Persona {
      * </ul>
      */
     public void validar() {
-        // TODO Etapa 1
-        throw new UnsupportedOperationException("TODO: validar");
+
+    // 1. La posición debe ser válida
+    if (posicion == null || !Posicion.esValida(posicion)) {
+        throw new IllegalArgumentException("La posición no es válida: " + posicion);
     }
+
+    // 2. El nombre no puede ser nulo ni estar vacío
+    if (nombre == null || nombre.trim().isEmpty()) {
+        throw new IllegalArgumentException("El nombre no puede ser nulo ni estar en blanco");
+    }
+
+    // 3. El nombre no puede superar los 100 caracteres
+    if (nombre.length() > MAX_NOMBRE) {
+        throw new IllegalArgumentException("El nombre supera el máximo de " + MAX_NOMBRE + " caracteres");
+    }
+
+    // 4. El nombre no puede contener punto y coma ni saltos de línea
+    if (nombre.contains(";") || nombre.contains("\n") || nombre.contains("\r")) {
+        throw new IllegalArgumentException("El nombre contiene caracteres no permitidos");
+    }
+
+    // 5. El año de nacimiento debe ser mayor que cero
+    if (nacimiento <= 0) {
+        throw new IllegalArgumentException("El año de nacimiento debe ser mayor que cero");
+    }
+
+    // 6. El fallecimiento no puede ser anterior al nacimiento
+    if (fallecimiento != null && fallecimiento < nacimiento) {
+        throw new IllegalArgumentException("El año de fallecimiento no puede ser anterior al nacimiento");
+    }
+}
 
     public String getPosicion() { return posicion; }
     public String getNombre() { return nombre; }
